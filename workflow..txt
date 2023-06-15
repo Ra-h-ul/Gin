@@ -17,12 +17,10 @@ x. create an end point for router by using router.run(localhost:8080)
 
 
 
-
-
-
-
-
 curl command list 
+
+1. for GET request
+    curl localhost:8080/students
 
 2. for post request :
     curl http://localhost:8080/add \

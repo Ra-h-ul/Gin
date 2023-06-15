@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -50,9 +50,29 @@ func add_sudent_data(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, new_student)
 }
 
+//GET request to receive specific item
+
+func get_specific_student(c *gin.Context) {
+	roll_no := c.Param("roll_no")
+
+	roll_no_conv, _ := strconv.ParseInt(roll_no, 10, 32)
+	roll_no_int := int(roll_no_conv)
+
+	for _, s := range Students {
+
+		if s.Roll_no == roll_no_int {
+			c.IndentedJSON(http.StatusFound, s)
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "student not found"})
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/students", get_student_data)
+	router.GET("/students/:roll_no", get_specific_student)
 	router.POST("/add", add_sudent_data)
 	router.Run("localhost:8080")
 
