@@ -32,8 +32,28 @@ func get_student_data(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, Students)
 }
 
+// POST request (add new items)
+func add_sudent_data(c *gin.Context) {
+	// create a new student
+	var new_student Student
+
+	//using Bindjson to bind the received json
+	err := c.BindJSON(&new_student) // returns an error
+
+	if err != nil {
+		return
+	}
+
+	// add new student to the student slice
+
+	Students = append(Students, new_student)
+	c.IndentedJSON(http.StatusCreated, new_student)
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/students", get_student_data)
+	router.POST("/add", add_sudent_data)
 	router.Run("localhost:8080")
+
 }

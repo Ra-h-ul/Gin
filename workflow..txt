@@ -1,0 +1,32 @@
+here student is struct and students is a slice
+
+1. create a file structure , add values to the file structure
+2. create a router (router:=gin.Default())
+3. create a get request (router.get ("adress like /name " , get request function )
+4. create get request function and pass gin.context and return indentedjson(https status ok , students)
+
+
+5.create a post request (router.post("/add" , post function))
+6.create post function and pass gin.context 
+steps : create new student , bindjson and pass refrence of student , if no error detected 
+, append the student to original slice and use IndentedJSON to render the json 
+
+
+
+x. create an end point for router by using router.run(localhost:8080)
+
+
+
+
+
+
+
+
+curl command list 
+
+2. for post request :
+    curl http://localhost:8080/add \
+    --include \
+    --header "Content-Type: application/json" \
+    --request "POST" \
+    --data '{"FirstName": "new","LastName": "guy","Roll_no": 19, "Class": 12,"Phone_No": 89721}'
