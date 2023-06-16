@@ -30,3 +30,9 @@ curl command list
     --header "Content-Type: application/json" \
     --request "POST" \
     --data '{"FirstName": "new","LastName": "guy","Roll_no": 19, "Class": 12,"Phone_No": 89721}'
+
+3. get specific student:
+    curl localhost:8080/students/19
+
+4. patch request:
+ curl localhost:8080/delete?id=19 --request "PATCH"

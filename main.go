@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	_ "fmt"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -31,12 +33,14 @@ var Students = []Student{
 
 // GET request for students
 func get_student_data(c *gin.Context) {
-
+	Request.Println("Get student data")
 	c.IndentedJSON(http.StatusOK, Students)
+	Output.Printf("%v \n \n ", Students)
 }
 
 // POST request (add new items)
 func add_sudent_data(c *gin.Context) {
+	Request.Println("Add student data")
 	// create a new student
 	var new_student Student
 
@@ -44,6 +48,7 @@ func add_sudent_data(c *gin.Context) {
 	err := c.BindJSON(&new_student) // returns an error
 
 	if err != nil {
+		Errors.Printf("%v \n \n", err)
 		return
 	}
 
@@ -51,6 +56,7 @@ func add_sudent_data(c *gin.Context) {
 	for _, j := range Students {
 		if new_student.Roll_no == j.Roll_no {
 			c.IndentedJSON(http.StatusConflict, gin.H{"message ": "roll number already exists"})
+			Errors.Println("roll number already exists \n ")
 			return
 		}
 	}
@@ -59,11 +65,12 @@ func add_sudent_data(c *gin.Context) {
 
 	Students = append(Students, new_student)
 	c.IndentedJSON(http.StatusCreated, new_student)
+	Output.Printf("%v \n \n ", new_student)
 }
 
-//GET request to receive specific item
-
+// GET request to receive specific item
 func get_specific_student(c *gin.Context) {
+	Request.Println("Get specific student")
 	roll_no := c.Param("roll_no")
 
 	roll_no_conv, _ := strconv.ParseInt(roll_no, 10, 32)
@@ -73,11 +80,11 @@ func get_specific_student(c *gin.Context) {
 
 		if s.Roll_no == roll_no_int {
 			c.IndentedJSON(http.StatusFound, s)
-
+			Output.Printf("%v \n \n ", s)
 			return
 		}
 	}
-
+	Errors.Println(" student not found \n ")
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "student not found"})
 }
 
@@ -89,6 +96,7 @@ func get_student_by_rollno(roll_no int) (*Student, error) {
 			return &Students[i], nil
 		}
 	}
+	Errors.Println(" student not found \n ")
 	return nil, errors.New(" student not found")
 }
 
@@ -97,12 +105,16 @@ func delete_specific_student(c *gin.Context) {
 	// returns query and boolean value
 	roll_no, ok := c.GetQuery("id")
 
+	Request.Println("Delete student : ", roll_no)
+
 	roll_no_conv, _ := strconv.ParseInt(roll_no, 10, 32)
 	roll_no_int := int(roll_no_conv)
 
+	// if getquery returns false we raise an error
 	if !ok {
 		fmt.Println(roll_no)
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "roll number not found"})
+		Errors.Println("roll number not found \n ")
 		return
 	}
 
@@ -114,9 +126,10 @@ func delete_specific_student(c *gin.Context) {
 
 	set_all_null(Std)
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "student deleted"})
-
+	Output.Printf("student deleted : %v\n ", roll_no)
 }
 
+// sets all values to null (used by delete function)
 func set_all_null(std *Student) {
 	std.Roll_no = 0
 	std.Class = 0
@@ -125,7 +138,32 @@ func set_all_null(std *Student) {
 	std.Phone_No = 0
 }
 
+var (
+	SessionTracker *log.Logger
+	Errors         *log.Logger
+	Request        *log.Logger
+	Output         *log.Logger
+)
+
+func init() {
+	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+
+	if err != nil {
+		panic(err)
+	}
+
+	SessionTracker = log.New(file, "Session : ", log.Lshortfile|log.Ltime)
+	Errors = log.New(file, "Errors : ", log.Lshortfile|log.Ltime)
+	Request = log.New(file, "Request : ", log.Lshortfile|log.Ltime)
+	Output = log.New(file, "Output : ", log.Lshortfile|log.Ltime)
+
+	SessionTracker.Println("######################### \n ")
+}
+
 func main() {
+	println("ho \n")
+	println("hi")
+	SessionTracker.Println("New session started")
 	router := gin.Default()
 	router.GET("/students", get_student_data)
 	router.GET("/students/:roll_no", get_specific_student)

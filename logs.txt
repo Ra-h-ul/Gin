@@ -1,0 +1,52 @@
+Session : 23:28:51 main.go:160: ######################### 
+ 
+Session : 23:28:51 main.go:166: New session started
+Request : 23:28:57 main.go:36: Get student data
+Output : 23:28:57 main.go:38: [{Rahul Pandita 17 12 78897} {john  Doe 18 12 97887} {Db Cooper 19 11 9419} {Tony Montana 21 11 2250} {papa Franku 23 12 9682} {Mah Dank 32 12 1234}] 
+ 
+ 
+Request : 23:28:59 main.go:36: Get student data
+Output : 23:28:59 main.go:38: [{Rahul Pandita 17 12 78897} {john  Doe 18 12 97887} {Db Cooper 19 11 9419} {Tony Montana 21 11 2250} {papa Franku 23 12 9682} {Mah Dank 32 12 1234}] 
+ 
+ 
+Request : 23:29:01 main.go:73: Get specific student
+Errors : 23:29:01 main.go:87:  student not found 
+ 
+Request : 23:29:03 main.go:73: Get specific student
+Output : 23:29:03 main.go:83: {Db Cooper 19 11 9419} 
+ 
+ 
+Request : 23:29:06 main.go:73: Get specific student
+Errors : 23:29:06 main.go:87:  student not found 
+ 
+Request : 23:29:20 main.go:43: Add student data
+Errors : 23:29:20 main.go:59: roll number already exists 
+ 
+Request : 23:29:24 main.go:43: Add student data
+Output : 23:29:24 main.go:68: {new guy 29 12 89721} 
+ 
+ 
+Request : 23:29:29 main.go:43: Add student data
+Output : 23:29:29 main.go:68: {new guy 39 12 89721} 
+ 
+ 
+Request : 23:29:33 main.go:43: Add student data
+Errors : 23:29:33 main.go:59: roll number already exists 
+ 
+Request : 23:29:41 main.go:108: Delete student :  19
+Output : 23:29:41 main.go:129: student deleted : 19
+ 
+Request : 23:29:43 main.go:108: Delete student :  19
+Errors : 23:29:43 main.go:99:  student not found 
+ 
+Request : 23:30:03 main.go:43: Add student data
+Output : 23:30:03 main.go:68: {new guy 19 12 89721} 
+ 
+ 
+Request : 23:30:10 main.go:36: Get student data
+Output : 23:30:10 main.go:38: [{Rahul Pandita 17 12 78897} {john  Doe 18 12 97887} {  0 0 0} {Tony Montana 21 11 2250} {papa Franku 23 12 9682} {Mah Dank 32 12 1234} {new guy 29 12 89721} {new guy 39 12 89721} {new guy 19 12 89721}] 
+ 
+ 
+Session : 23:30:26 main.go:160: ######################### 
+ 
+Session : 23:30:26 main.go:166: New session started
