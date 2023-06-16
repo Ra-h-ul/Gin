@@ -13,6 +13,8 @@ steps : create new student , bindjson and pass refrence of student , if no error
 
 
 
+7.get specific items:
+
 x. create an end point for router by using router.run(localhost:8080)
 
 
